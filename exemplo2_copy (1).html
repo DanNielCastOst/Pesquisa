@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FF4500"/>
+    <title>De: Nicholas</title>
+    <link rel="icon" href="icone.jpg" type="image/png">
+    <style>
+        /* Reset de estilos */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilo do corpo da página */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #333; /* Tema escuro */
+            padding: 20px;
+        }
+
+        /* Container principal */
+        .container {
+            background-color: #444; /* Tom intermediário para o container */
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra mais intensa */
+            margin: 20px auto; /* Centralizado na horizontal */
+        }
+
+        /* Título principal */
+        .title {
+            color: #FF4500;
+            font-family: 'Rockwell', serif;
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Barra de pesquisa e dropdown */
+        .search-bar {
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 20px; /* Aumentando o tamanho do input */
+            font-size: 24px; /* Aumentando o tamanho da fonte */
+            border: 2px solid #555; /* Borda mais grossa */
+            border-radius: 12px;
+            background-color: #666; /* Fundo mais escuro */
+            color: #fff; /* Texto branco */
+            outline: none;
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: #FF4500;
+            background-color: #777; /* Altera cor de fundo quando focado */
+        }
+
+        .custom-dropdown {
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .custom-dropdown select {
+            width: 100%;
+            padding: 20px; /* Aumentando o tamanho do dropdown */
+            font-size: 24px; /* Aumentando o tamanho da fonte */
+            border: 2px solid #555; /* Borda mais grossa */
+            border-radius: 12px;
+            background-color: #666; /* Fundo mais escuro */
+            color: #fff; /* Texto branco */
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Estilo das opções do dropdown */
+        .custom-dropdown option {
+            background-color: #666; /* Fundo mais escuro */
+            color: #fff; /* Texto branco */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .custom-dropdown option:hover {
+            background-color: #555; /* Destaque mais escuro ao passar o mouse */
+            color: #fff; /* Texto branco */
+        }
+
+        /* Botão de pesquisa */
+        .search-button {
+            width: 100%;
+            padding: 20px 0; /* Aumentando o tamanho do botão */
+            background-color: #FF4500;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 12px;
+            font-size: 28px; /* Aumentando o tamanho da fonte */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .search-button:hover {
+            background-color: #CC3700;
+        }
+
+        /* Descrição do dropdown */
+        .dropdown-description {
+            display: none;
+            color: #ccc; /* Texto cinza claro */
+            font-size: 20px; /* Tamanho da fonte menor */
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .show-description {
+            display: block;
+        }
+
+        /* Checkbox para abrir em nova aba */
+        .page-option {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page-option input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.5);
+            cursor: pointer;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .page-option input[type="checkbox"]:checked {
+            background-color: #FF4500;
+            border-color: #FF4500;
+        }
+
+        .page-option input[type="checkbox"]:checked::before {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 6px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .page-option label {
+            font-size: 20px;
+            color: #fff; /* Texto branco */
+        }
+
+        /* Remover a cor azul do foco */
+        select:focus, .search-box:focus {
+            outline: none;
+            border-color: #555; /* Cor da borda quando focado */
+        }
+    </style>
+</head>
+<body onload="toggleDescription()">
+
+<div class="container">
+    <h1 class="title">Pesquisa na Web</h1>
+
+    <div class="search-bar">
+        <input type="text" id="search-box" class="search-box" placeholder="Digite algo..." onkeyup="toggleButtons()" onclick="removeError()">
+
+        <div class="custom-dropdown">
+            <select id="search-provider" onchange="toggleDescription()">
+                <optgroup label="Sites do Google">
+                    <option value="google">Google</option>
+                    <option value="google-maps">Google Maps</option>
+                    <option value="google-images">Google Imagens</option>
+                    <option value="youtube">YouTube</option>
+                </optgroup>
+                <optgroup label="Outros sites">
+                    <option value="vagalume">Vagalume</option>
+                    <option value="github">GitHub</option>
+                    <option value="mercado-livre">Mercado Livre</option>
+                </optgroup>
+                <optgroup label="Favoritos">
+                    <option value="steam">Steam</option>
+                    <option value="wikipedia">Wikipedia</option>
+                </optgroup>
+            </select>
+
+            <p class="dropdown-description" id="google-description">Pesquise sobre qualquer coisa.</p>
+            <p class="dropdown-description" id="google-maps-description">Pesquise algum lugar no mapa.</p>
+            <p class="dropdown-description" id="google-images-description">Pesquise uma imagem.</p>
+            <p class="dropdown-description" id="youtube-description">Pesquise um vídeo.</p>
+            <p class="dropdown-description" id="vagalume-description">Pesquise letra de música.</p>
+            <p class="dropdown-description" id="github-description">Pesquise algum diretório.</p>
+            <p class="dropdown-description" id="mercado-livre-description">Pesquise algo para comprar.</p>
+            <p class="dropdown-description" id="steam-description">Pesquise jogos.</p>
+            <p class="dropdown-description" id="wikipedia-description">Pesquise informações sobre algo.</p>
+        </div>
+    </div>
+<hr> <!-- Divisória -->
+    <div class="page-option">
+        <label for="open-in-new">Abrir em nova aba</label>
+        <input type="checkbox" id="open-in-new" onchange="togglePageOption(this)">
+    </div>
+
+    <button class="search-button" onclick="search()">Pesquisar</button>
+</div>
+
+<script>
+    function search() {
+        var providerDropdown = document.getElementById("search-provider");
+        var provider = providerDropdown.value;
+        var query = document.getElementById("search-box").value.trim();
+
+        if (query && provider) {
+            var url;
+            switch (provider) {
+                case 'google':
+                    url = "https://www.google.com.br/search?q=" + encodeURIComponent(query);
+                    break;
+                case 'google-maps':
+                    url = "https://www.google.com/maps/search/" + encodeURIComponent(query);
+                    break;
+                case 'google-images':
+                    url = "https://www.google.com/search?tbm=isch&q=" + encodeURIComponent(query);
+                    break;
+                case 'youtube':
+                    url = "https://www.youtube.com/results?search_query=" + encodeURIComponent(query);
+                    break;
+                case 'vagalume':
+                    url = "https://www.vagalume.com.br/search?q=" + encodeURIComponent(query);
+                    break;
+                case 'github':
+                    url = "https://github.com/search?q=" + encodeURIComponent(query);
+                    break;
+                case 'mercado-livre':
+                    url = "https://lista.mercadolivre.com.br/" + encodeURIComponent(query);
+                    break;
+                case 'steam':
+                    url = "https://store.steampowered.com/search/?term=" + encodeURIComponent(query);
+                    break;
+                case 'wikipedia':
+                    url = "https://pt.wikipedia.org/wiki/" + query.split(' ').join('+');
+                    break;
+                default:
+                    break;
+            }
+
+            if (url) {
+                if (document.getElementById("open-in-new").checked) {
+                    window.open(url, "_blank").focus();
+                } else {
+                    window.location.href = url;
+                }
+                document.getElementById("search-box").value = "";
+                document.getElementById("search-provider").selectedIndex = 0;
+                document.getElementById("open-in-new").checked = false;
+                togglePageOption(); // Reset toggle styles
+            }
+        } else {
+            alert("Por favor, preencha a busca e selecione um provedor.");
+        }
+    }
+
+    function togglePageOption() {
+        var openInNew = document.getElementById("open-in-new").checked;
+        toggleSquareStyles(openInNew);
+    }
+
+    function toggleSquareStyles(openInNew) {
+        var square = document.querySelector('.page-option .toggle-square');
+        if (openInNew) {
+            square.style.backgroundColor = "#FF4500";
+        } else {
+            square.style.backgroundColor = "#ccc";
+        }
+    }
+
+    function toggleDescription() {
+        var providerDropdown = document.getElementById("search-provider");
+        var descriptionElements = document.getElementsByClassName("dropdown-description");
+        for (var i = 0; i < descriptionElements.length; i++) {
+            descriptionElements[i].classList.remove("show-description");
+        }
+
+        var selectedOption = providerDropdown.value;
+        var descriptionElement = document.getElementById(selectedOption + "-description");
+        if (descriptionElement) {
+            descriptionElement.classList.add("show-description");
+        }
+    }
+
+    function toggleButtons() {
+        var searchBox = document.getElementById("search-box");
+        var searchButton = document.querySelector(".search-button");
+
+        if (searchBox.value.trim()) {
+            searchButton.removeAttribute("disabled");
+        } else {
+            searchButton.setAttribute("disabled", "true");
+        }
+    }
+
+    function removeError() {
+        var searchBox = document.getElementById("search-box");
+        searchBox.style.borderColor = "";
+    }
+</script>
+
+</body>
+</html>
